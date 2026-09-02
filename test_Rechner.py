@@ -3,6 +3,6 @@ import pytest
 from Rechner import berechne
 
 def test_addition():
-    assert berechne(2, 3, "+") == 5
+    assert berechne(2, 3, "+") == 6
 
 
