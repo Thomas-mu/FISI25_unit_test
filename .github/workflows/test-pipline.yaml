@@ -1,0 +1,37 @@
+name: Rechner Komponententest
+
+# 1. WANN soll die Pipeline starten? (Der Trigger)
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# 2. WAS soll gemacht werden? (Die Jobs)
+jobs:
+  test-rechner:
+    # Auf welchem Betriebssystem soll der Test laufen?
+    runs-on: ubuntu-latest
+
+    # 3. WIE sieht der genaue Ablauf aus? (Die Steps)
+    steps:
+    # Schritt A: Den Code aus dem Repository auf den Runner laden
+    - name: Code auschecken
+      uses: actions/checkout@v4
+
+    # Schritt B: Python auf dem Ubuntu-Server installieren
+    - name: Python 3.12 einrichten
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    # Schritt C: Benötigte Pakete (wie pytest) installieren
+    - name: Abhängigkeiten installieren
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+
+    # Schritt D: Den eigentlichen Test ausführen
+    - name: Pytest für Rechner.py ausführen
+      run: |
+        pytest test_Rechner.py
